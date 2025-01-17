@@ -3,7 +3,6 @@ from scipy.integrate import odeint
 import pandas as pd
 from numba.experimental import jitclass
 from numba import types, jit
-from torch import binomial
 
 
 class EpiModel(object):
