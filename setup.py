@@ -13,7 +13,7 @@ here = pathlib.Path(__file__).parent.resolve()
 # Get the long description from the README file
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 # all files in data/ and subfolders
-data_files = ['config/*'] + [str(p.relative_to(*p.parts[:1])) for p in pathlib.Path(here / 'gym_covid/data').rglob('*/')]
+data_files = ['config/*'] + [str(p.relative_to(here / 'gym_covid')) for p in (here / 'gym_covid/data').rglob('*') if p.is_file()]
 
 setup(
     name='gym-covid',
@@ -28,6 +28,7 @@ setup(
     package_dir={'gym_covid': 'gym_covid'},
     packages=find_packages(where='./'),
     python_requires='>=3.7, <4',
+    include_package_data=True,
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.
