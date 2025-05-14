@@ -105,6 +105,7 @@ class EpiEnv(gym.Env):
             S_s = s[self.model.S]
             S_s_n = s_n[self.model.S]
             r_ari += -(np.sum(S_s) - np.sum(S_s_n))
+            current_susceptible = np.sum(S_s)
             # attack rate hospitalization
             I_hosp_new_s_n = s_n[self.model.I_hosp_new] + s_n[self.model.I_icu_new]
             r_arh += -np.sum(I_hosp_new_s_n)
@@ -129,4 +130,5 @@ class EpiEnv(gym.Env):
 
         # next-state , reward, terminal?, info
         # provide action as proxy for current SCM, impacts progression of epidemic
-        return (state_n, event_n, action.copy()), np.array([r_ari, r_arh, r_sr_w, r_sr_s, r_sr_l]), False, {}
+        return ((state_n, event_n, action.copy()), np.array([r_ari, r_arh, r_sr_w, r_sr_s, r_sr_l]), False,
+                {"current_susceptible": current_susceptible})
